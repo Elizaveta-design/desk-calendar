@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kalendar — политика конфиденциальности</title>
+<title>Kalendar — политика конфиденциальности / Privacy Policy</title>
 <style>
   body { font: 17px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; max-width: 720px; margin: 0 auto; padding: 40px 20px; color: #222; background: #fafaf8 }
   h1 { font-size: 30px; margin: 0 0 6px }
@@ -12,10 +12,31 @@
   a { color: #2f6fbd }
   li { margin: 4px 0 }
   hr { border: 0; border-top: 1px solid #ddd; margin: 40px 0 }
+  .js.ru [data-l=en], .js.en [data-l=ru] { display: none }
+  .langs { position: fixed; top: 16px; right: 16px; display: flex; gap: 2px; padding: 3px; border-radius: 10px; background: #ecebe6 }
+  .langs button { font: inherit; font-size: 14px; font-weight: 600; border: 0; border-radius: 7px; padding: 4px 10px; background: none; color: #777; cursor: pointer }
+  .js.ru .langs [onclick*=ru], .js.en .langs [onclick*=en] { background: #fff; color: #222; box-shadow: 0 1px 2px rgba(0,0,0,.12) }
+  html:not(.js) .langs { display: none }
 </style>
+<script>
+  (function () {
+    var q = new URLSearchParams(location.search).get('lang'), s = null;
+    try { s = localStorage.getItem('lang'); } catch (e) {}
+    var l = q || s || ((navigator.language || '').toLowerCase().indexOf('ru') === 0 ? 'ru' : 'en');
+    document.documentElement.className = 'js ' + (l === 'en' ? 'en' : 'ru');
+    document.documentElement.lang = l === 'en' ? 'en' : 'ru';
+  })();
+  function setLang(l) {
+    document.documentElement.className = 'js ' + l;
+    document.documentElement.lang = l;
+    try { localStorage.setItem('lang', l); } catch (e) {}
+  }
+</script>
 </head>
 <body>
+<div class="langs"><button onclick="setLang('ru')">Ru</button><button onclick="setLang('en')">En</button></div>
 <p><a href="./">← Kalendar</a></p>
+<div data-l="ru">
 <h1>Политика конфиденциальности</h1>
 <p class="sub">Kalendar · действует с 7 октября 2026 года</p>
 
@@ -60,9 +81,8 @@
 
 <h2>Вопросы</h2>
 <p>Задать вопрос можно на странице проекта: <a href="https://github.com/Elizaveta-design/desk-calendar/issues">github.com/Elizaveta-design/desk-calendar/issues</a>.</p>
-
-<hr>
-
+</div>
+<div data-l="en">
 <h1>Privacy Policy</h1>
 <p class="sub">Kalendar · effective October 7, 2026</p>
 
@@ -105,5 +125,6 @@ including the Limited Use requirements. Google user data is used only to provide
 
 <h2>Contact</h2>
 <p>Questions: <a href="https://github.com/Elizaveta-design/desk-calendar/issues">github.com/Elizaveta-design/desk-calendar/issues</a>.</p>
+</div>
 </body>
 </html>

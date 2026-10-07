@@ -12,9 +12,30 @@
   a { color: #2f6fbd }
   hr { border: 0; border-top: 1px solid #ddd; margin: 36px 0 }
   footer { color: #888; font-size: 14px }
+  .js.ru [data-l=en], .js.en [data-l=ru] { display: none }
+  .langs { position: fixed; top: 16px; right: 16px; display: flex; gap: 2px; padding: 3px; border-radius: 10px; background: #ecebe6 }
+  .langs button { font: inherit; font-size: 14px; font-weight: 600; border: 0; border-radius: 7px; padding: 4px 10px; background: none; color: #777; cursor: pointer }
+  .js.ru .langs [onclick*=ru], .js.en .langs [onclick*=en] { background: #fff; color: #222; box-shadow: 0 1px 2px rgba(0,0,0,.12) }
+  html:not(.js) .langs { display: none }
 </style>
+<script>
+  (function () {
+    var q = new URLSearchParams(location.search).get('lang'), s = null;
+    try { s = localStorage.getItem('lang'); } catch (e) {}
+    var l = q || s || ((navigator.language || '').toLowerCase().indexOf('ru') === 0 ? 'ru' : 'en');
+    document.documentElement.className = 'js ' + (l === 'en' ? 'en' : 'ru');
+    document.documentElement.lang = l === 'en' ? 'en' : 'ru';
+  })();
+  function setLang(l) {
+    document.documentElement.className = 'js ' + l;
+    document.documentElement.lang = l;
+    try { localStorage.setItem('lang', l); } catch (e) {}
+  }
+</script>
 </head>
 <body>
+<div class="langs"><button onclick="setLang('ru')">Ru</button><button onclick="setLang('en')">En</button></div>
+<div data-l="ru">
 <h1>Kalendar</h1>
 <p class="sub">Календарь для рабочего стола Windows</p>
 
@@ -28,19 +49,20 @@
 календаре «Kalendar» в <b>вашем</b> Google Календаре. Своего сервера у программы нет: данные никуда, кроме
 вашего аккаунта Google, не отправляются.</p>
 
-<p><a href="privacy.html">Политика конфиденциальности</a></p>
+<p><a href="privacy.html?lang=ru">Политика конфиденциальности</a></p>
+</div>
+<div data-l="en">
+<h1>Kalendar</h1>
+<p class="sub">A desktop calendar for Windows</p>
 
-<hr>
-
-<h2>English</h2>
 <p><b>Kalendar</b> is a desktop calendar for Windows. It sits on your wallpaper and shows your plans for the coming weeks,
 with a small always-on-top widget for upcoming events. It supports flexible recurring events, done marks,
 carrying over missed tasks, notes and sticky notes.</p>
 <p>Optionally, you can sign in with your Google account. Your schedule is then stored in <b>your own</b> Google Drive
 (in a “Kalendar” folder) and synced between your computers, and events can be shown in a separate “Kalendar” calendar
 in <b>your own</b> Google Calendar. The app has no server of its own: your data is never sent anywhere except your Google account.</p>
-<p><a href="privacy.html">Privacy policy</a></p>
-
+<p><a href="privacy.html?lang=en">Privacy policy</a></p>
+</div>
 <footer><hr>Kalendar · <a href="https://github.com/Elizaveta-design/desk-calendar">GitHub</a></footer>
 </body>
 </html>
